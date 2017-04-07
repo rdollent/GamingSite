@@ -1,52 +1,84 @@
-/*start CSS reset */
+html {
+  height: 100%;
+}
 
-/* http://meyerweb.com/eric/tools/css/reset/ 
-   v2.0 | 20110126
-   License: none (public domain)
-*/
 
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
+* {
+  /*border: 1px solid black !important; /*to display borders of elements, helps with CSS position and resize*/
+  box-sizing:border-box;
 }
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
+
+p {
+  text-align: justify;
 }
-body {
-	line-height: 1;
+.results {
+  margin: 10px auto;
+  border: 1px solid black;
+  width: 80%;
+  padding: 5px;
 }
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
+
 table {
-	border-collapse: collapse;
-	border-spacing: 0;
+  border-collapse:collapse;
+  border: 2px solid black;
+  border-top: 2px solid black;
 }
 
-/*End CSS reset*/
+thead tr:nth-of-type(1) {
+  border: 2px solid black;
+
+}
+
+td {
+  border-bottom: 1px solid black;
+}
+
+th {
+  border-right: 1px solid black;
+}
+
+h2 {
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+h3 {
+  border-bottom: 1px solid black;
+}
+
+#mainDiv {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.titles {
+  border: 0;
+}
+
+figcaption {
+  width: 80%;
+}
+
+.barAndBtn {
+  margin: 20px auto;
+  text-align: center;
+  padding-top: 20%;
+  padding-bottom: 20%;
+}
+
+#search {
+  margin: 5px;
+  border:0;
+  border-bottom: 1px solid black;
+}
+
+#search:focus {
+  outline: 0;
+}
+
+#submit {
+  margin: 5px;
+  background: white;
+  border: 1px solid black;
+  padding: 5px;
+}
