@@ -1,31 +1,39 @@
 html {
   height: 100%;
+  width:100%;
 }
 
 
 * {
   /*border: 1px solid black !important; /*to display borders of elements, helps with CSS position and resize*/
   box-sizing:border-box;
+  font-family: 'Hind Siliguri', sans-serif;
 }
 
 p {
   text-align: justify;
 }
+
 .results {
   margin: 10px auto;
-  border: 1px solid black;
+  border: 1px solid #aaa;
+  box-shadow: 3px 3px 2px #ccc;
   width: 80%;
-  padding: 5px;
+  padding: 10px;
+  margin-top: 10px;
+  opacity: 1;
+  transition: margin-top 0.5s cubic-bezier(0.15, 0.6, 0.32, 1.05), opacity 0.5s;
+
 }
 
 table {
   border-collapse:collapse;
-  border: 2px solid black;
-  border-top: 2px solid black;
+  border: 1px solid black;
+  border-top: 1px solid black;
 }
 
 thead tr:nth-of-type(1) {
-  border: 2px solid black;
+  border: 1px solid black;
 
 }
 
@@ -38,17 +46,22 @@ th {
 }
 
 h2 {
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
+  border-bottom: 1px solid #ccc;
+  border-top: 1px solid #999;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 h3 {
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid #fff;
 }
 
-#mainDiv {
-  width: 80%;
+.main {
+  max-width: 80%;
   margin: 0 auto;
+  margin-top: 5px;
+  opacity: 1;
+  transition: margin-top 1s cubic-bezier(0, 0, 0.2, 1), opacity 0.5s;
 }
 
 .titles {
@@ -56,29 +69,63 @@ h3 {
 }
 
 figcaption {
-  width: 80%;
+  max-width: 80%;
+  font-style:italic;
 }
 
-.barAndBtn {
+img {
+  max-width:80%;
+}
+
+.bb {
   margin: 20px auto;
   text-align: center;
-  padding-top: 20%;
-  padding-bottom: 20%;
+  transition: margin-top 0.5s cubic-bezier(0, 0, 0.2, 1);
 }
 
-#search {
+.bbPadded {
+  margin-top: 20%;
+  margin-bottom: 20%;
+  transition:none;
+}
+
+.search {
+  display:inline-block;
   margin: 5px;
   border:0;
-  border-bottom: 1px solid black;
+  border-bottom: 2px solid black;
+  transition: width 0.5s cubic-bezier(0, 0.23, 0.4, 1.5) 0.7s;
+  width:0;
 }
 
-#search:focus {
+.search:focus {
   outline: 0;
 }
 
-#submit {
+.searchExpand {
+  width: 200px;
+}
+
+.submit, .back-button {
   margin: 5px;
   background: white;
   border: 1px solid black;
   padding: 5px;
+  opacity: 1;
+  transition: opacity 0.5s;
+  box-shadow: 1px 1px 2px #aaa;
+}
+
+.back-button {
+  
+}
+
+.fadeOut {
+  opacity:0;
+  transition:none;
+}
+
+.listPad {
+  margin-top: 50px;
+  transition:none;
 }
