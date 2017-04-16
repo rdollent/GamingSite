@@ -18,7 +18,7 @@ p {
   margin: 10px auto;
   border: 1px solid #aaa;
   box-shadow: 3px 3px 2px #ccc;
-  width: 80%;
+  max-width: 80%;
   padding: 10px;
   margin-top: 10px;
   opacity: 1;
@@ -30,6 +30,7 @@ table {
   border-collapse:collapse;
   border: 1px solid black;
   border-top: 1px solid black;
+  padding: 5px;
 }
 
 thead tr:nth-of-type(1) {
@@ -39,6 +40,7 @@ thead tr:nth-of-type(1) {
 
 td {
   border-bottom: 1px solid black;
+  padding:5px;
 }
 
 th {
@@ -128,4 +130,12 @@ img {
 .listPad {
   margin-top: 50px;
   transition:none;
+}
+
+
+/*media queries*/
+@media (max-width: 768px) {
+  .main {
+    max-width:100%;
+  }
 }
