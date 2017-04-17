@@ -118,10 +118,6 @@ img {
   box-shadow: 1px 1px 2px #aaa;
 }
 
-.back-button {
-  
-}
-
 .fadeOut {
   opacity:0;
   transition:none;
@@ -132,7 +128,13 @@ img {
   transition:none;
 }
 
+.gameName {
+  text-align: center;
+}
 
+.gamePic, .release, .platforms {
+  display:inline-block;
+}
 /*media queries*/
 @media (max-width: 768px) {
   .main {
