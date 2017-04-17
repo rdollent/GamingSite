@@ -5,6 +5,8 @@ const key = '79fbb0e3b137824088774e8af118892b8cb22e6e';
 
 const submit = document.getElementsByClassName('submit');
 const search = document.getElementsByClassName('search');
+const months = ['January','February','March','April','May','June','July','August','September','October', 'November', 'December'];
+
 window.onload = runThis;
 
 function runThis() {
@@ -18,17 +20,16 @@ function runThis() {
     let answer = search[0].value;
     const jsonpScript = document.createElement('script');
     jsonpScript.id = 'jsonpScriptId';
-    jsonpScript.src = `https://www.giantbomb.com/api/search/?api_key=${key}&format=jsonp&json_callback=storeData&query=${answer}&resources=game`;//&field_list=id,name,deck,image,original_release_date,platforms`;
+    jsonpScript.src = `https://www.giantbomb.com/api/search/?api_key=${key}&format=jsonp&json_callback=storeData&query=${answer}&resources=game&field_list=deck,description,image,name,original_game_rating,original_release_date,platforms`;
     document.head.appendChild(jsonpScript);
   }
+    
+  //animations
+  submit[0].addEventListener('click', removePad);
   
-  
-//animations
-submit[0].addEventListener('click', removePad);
-  
-function removePad() {
+  function removePad() {
     document.getElementsByClassName('bb')[0].classList.remove('bbPadded');
-}
+  }
   
 }
 
@@ -98,6 +99,8 @@ function createBackButton() {
 function newPage() {
   removeList();
   createBackButton();
+  backToTop();
+  
   let i = (this.id).slice(-1, this.id.length);
   let mainDiv = document.createElement('div');
   mainDiv.classList.add('main', 'listPad', 'fadeOut');
@@ -119,7 +122,33 @@ function newPage() {
   }
   ////////////////////////////
   
-  newDiv.innerHTML = newDesc;
+  //image
+  let gameImg;
+  if(arrResults[i].image !== null) {
+    gameImg = `<img src=${arrResults[i].image.thumb_url} class='gamePic'\>`;
+  } else {
+    gameImg = '';
+  }
+  
+  ///date for Release date
+  let parsedDate = Date.parse(arrResults[i].original_release_date);
+  let release = new Date(parsedDate);
+  let d = release.getDate();
+  let m = months[release.getMonth()];
+  let y = release.getFullYear();
+  let gameDate = `${m} ${d}, ${y}`;
+  
+  ///Platform
+  let platforms = [];
+  for(let j = 0; j < arrResults[i].platforms.length;j++) {
+    platforms.push(arrResults[i].platforms[j].name);
+  }
+  let gameSystems = platforms.join(', ');
+  newDiv.innerHTML = `<div class='gameName'><h1>${arrResults[i].name}</h1></div>`
+    + gameImg
+    + `<p class='release'>Release Date: ${gameDate}</p>`
+    + `<p class='platforms'>Platforms: ${gameSystems}</p>`
+    + newDesc;
   document.body.appendChild(mainDiv);
   mainDiv.appendChild(newDiv);
 
@@ -144,8 +173,15 @@ function rebuildList() {
   }
 }
 
+function backToTop() {
+  document.body.scrollTop = document.documentElement.scrollTop = 0;
+}
+
 //need:
-//name. platforms, release date.
+//platforms, release date.
 //maybe:
 //trailer playing in background
+
+
+
 
