@@ -23,7 +23,7 @@ function runThis() {
     jsonpScript.src = `https://www.giantbomb.com/api/search/?api_key=${key}&format=jsonp&json_callback=storeData&query=${answer}&resources=game&field_list=deck,description,image,name,original_game_rating,original_release_date,platforms`;
     document.head.appendChild(jsonpScript);
   }
-    
+  
   //animations
   submit[0].addEventListener('click', removePad);
   
@@ -38,7 +38,7 @@ let arrResults = [];
 //note: callback should be in global scope
 function storeData(s) {
   console.log(s);
-  if(s.error === "OK") {  
+  if(s.error === 'OK') {
     arrResults = s.results;
     console.log(arrResults);
     //create divs for list
@@ -71,11 +71,11 @@ function createList() {
     myLoop();
   }
   let btn = document.getElementsByClassName('back-button');
-  if(btn[0] !== null) {
+
+  if(btn[0] !== undefined) {
     btn[0].remove();
   }
 }
-
 
 function removeList() {
   let x = document.getElementsByClassName('main');
@@ -91,7 +91,7 @@ function removeList() {
 function createBackButton() {
   let btnBack = document.createElement('button');
   btnBack.classList.add('back-button', 'fadeOut');
-  btnBack.innerHTML = '<- Back to Results';
+  btnBack.innerHTML = '<i class="fa fa-arrow-left" aria-hidden="true"></i>';
   document.body.getElementsByClassName('bb')[0].appendChild(btnBack);
   document.getElementsByClassName('back-button')[0].addEventListener('click', rebuildList);
 }
@@ -125,7 +125,7 @@ function newPage() {
   //image
   let gameImg;
   if(arrResults[i].image !== null) {
-    gameImg = `<img src=${arrResults[i].image.thumb_url} class='gamePic'\>`;
+    gameImg = `<img src=${arrResults[i].image.thumb_url} class='gamePic'>`;
   } else {
     gameImg = '';
   }
@@ -140,14 +140,20 @@ function newPage() {
   
   ///Platform
   let platforms = [];
-  for(let j = 0; j < arrResults[i].platforms.length;j++) {
-    platforms.push(arrResults[i].platforms[j].name);
+  let gameSystems = '';
+  
+  if(arrResults[i].platforms !== null) {
+    for(let j = 0; j < arrResults[i].platforms.length;j++) {
+      platforms.push(arrResults[i].platforms[j].name);
+    }
+    gameSystems = platforms.join(', ');
   }
-  let gameSystems = platforms.join(', ');
-  newDiv.innerHTML = `<div class='gameName'><h1>${arrResults[i].name}</h1></div>`
-    + gameImg
-    + `<p class='release'>Release Date: ${gameDate}</p>`
-    + `<p class='platforms'>Platforms: ${gameSystems}</p>`
+
+   
+  newDiv.innerHTML = gameImg 
+    + `<div class='gameName'><h1>${arrResults[i].name}</h1></div>`
+    + `<p class='release'><strong>Release Date:</strong><br>${gameDate}</p>`
+    + `<p class='platforms'><strong>Platforms:</strong><br>${gameSystems}</p>`
     + newDesc;
   document.body.appendChild(mainDiv);
   mainDiv.appendChild(newDiv);
@@ -158,11 +164,38 @@ function newPage() {
   //  
   //}
   //console.log(tags);
-  
+
   setTimeout(function() {
     document.getElementsByClassName('main')[0].classList.remove('listPad', 'fadeOut');
     document.getElementsByClassName('back-button')[0].classList.remove('fadeOut');
   },200);
+  
+  ///back to top scroll
+  let screenHeight = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+  let documentHeight = document.body.scrollHeight;
+
+  let topAnchor = document.createElement('anchor');
+  topAnchor.classList.add('backToTop', 'fadeOut');
+  topAnchor.innerHTML = '<i class="fa fa-arrow-up" aria-hidden="true"></i>'
+  topAnchor.addEventListener('click', backToTop);
+  let aStatus = false;
+  window.onscroll = function() {
+    if(window.pageYOffset >= screenHeight && !aStatus && document.getElementsByClassName('backToTop')[0] === undefined) {
+      mainDiv.appendChild(topAnchor);
+      aStatus = true;
+      setTimeout(function() {
+        document.getElementsByClassName('backToTop')[0].classList.remove('fadeOut');
+      },200);
+    } else if(window.pageYOffset < screenHeight && aStatus && document.getElementsByClassName('backToTop')[0] !== undefined){
+      setTimeout(function() {
+        document.getElementsByClassName('backToTop')[0].classList.add('fadeOut');
+      },200);
+      setTimeout(function() {
+        document.getElementsByClassName('backToTop')[0].remove();
+      },500);
+      aStatus = false;
+    }
+  }
 }
 
 function rebuildList() {
@@ -175,10 +208,14 @@ function rebuildList() {
 
 function backToTop() {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
+  let aTop = document.getElementsByClassName('backToTop');
+  if(aTop[0] !== undefined) {
+    aTop[0].remove();
+  }
 }
 
 //need:
-//platforms, release date.
+//
 //maybe:
 //trailer playing in background
 
