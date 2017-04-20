@@ -22,7 +22,24 @@ p {
   padding: 10px;
   margin-top: 10px;
   opacity: 1;
-  transition: margin-top 0.3s cubic-bezier(0.15, 0.6, 0.32, 1.05), opacity 0.3s;
+  transition: margin-top 0.3s cubic-bezier(0.15, 0.6, 0.32, 1.05),
+              opacity 0.3s,
+              color 0.2s,
+              background 0.2s;
+}
+
+.results:hover {
+  cursor: pointer;
+  background:#2098D1;
+  color: #fff;
+
+}
+
+.results:active {
+  position: relative;
+  left:2px;
+  top:2px;
+  box-shadow:none;
 
 }
 
@@ -119,10 +136,24 @@ img {
   box-shadow: 1px 1px 2px #aaa;
 }
 
+.submit:hover, .back-button:hover, .backToTop:hover {
+  cursor: pointer;
+  background:#2098D1;
+  color: #fff;
+
+}
+
+.submit:active, .back-button:active {
+  position: relative;
+  left:2px;
+  top:2px;
+  box-shadow:none;
+}
+
 .backToTop {
   display: inline-block;
   opacity: 1;
-  transition: opacity 0.5s;
+  transition: opacity 0.1s;
   position: fixed;
   top:0;
   left:0;
@@ -130,6 +161,7 @@ img {
   background: white;
   border: 1px solid black;
   box-shadow: 1px 1px 2px #aaa;
+  font-size: 130%;
 }
 
 /*note: put animation classes after main classes for it to work*/
