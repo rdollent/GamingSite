@@ -42,8 +42,27 @@ function storeData(s) {
     arrResults = s.results;
     console.log(arrResults);
     //create divs for list
-    createList();
+    if(arrResults.length > 0) {
+      createList();
+    } else {
+      noResults();
+    }
+
  }
+}
+
+function noResults() {
+    removeList();
+    let mainDiv = document.createElement('div');
+    mainDiv.classList.add('main', 'fadeOut', 'listPad');
+    let newDiv = document.createElement('div');
+    newDiv.innerHTML = `<h2>Your search yielded no results. Please try again.</h2>`;
+    mainDiv.appendChild(newDiv);
+    document.body.appendChild(mainDiv);
+    setTimeout(function() {
+          document.getElementsByClassName('main')[0].classList.remove('listPad','fadeOut');
+    },200);
+
 }
 
 function createList() {
@@ -79,6 +98,8 @@ function createList() {
 
 function removeList() {
   let x = document.getElementsByClassName('main');
+  console.log(x);
+  console.log(x[0]);
   let y = document.getElementById('jsonpScriptId');
   if(x[0] !== null && typeof(x[0]) !== 'undefined') {
     x[0].remove(); //document.body.removeChild(x);
@@ -189,10 +210,10 @@ function newPage() {
     } else if(window.pageYOffset < screenHeight && aStatus && document.getElementsByClassName('backToTop')[0] !== undefined){
       setTimeout(function() {
         document.getElementsByClassName('backToTop')[0].classList.add('fadeOut');
-      },200);
+      },100);
       setTimeout(function() {
         document.getElementsByClassName('backToTop')[0].remove();
-      },500);
+      },200);
       aStatus = false;
     }
   }
@@ -210,7 +231,7 @@ function backToTop() {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
   let aTop = document.getElementsByClassName('backToTop');
   if(aTop[0] !== undefined) {
-    aTop[0].remove();
+    aTop.remove();
   }
 }
 
