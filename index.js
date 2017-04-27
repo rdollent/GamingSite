@@ -95,7 +95,7 @@ function createList() {
   let btn = document.getElementsByClassName('back-button')[0];
 
   if(btn !== undefined) {
-    btn.remove();
+    document.body.removeChild(btn); //btn.remove();
   }
 }
 
@@ -103,10 +103,10 @@ function removeList() {
   let x = document.getElementsByClassName('main')[0];
   let y = document.getElementById('jsonpScriptId');
   if(x !== null && typeof(x) !== 'undefined') {
-    x.remove(); //document.body.removeChild(x);
+    document.body.removeChild(x); //x.remove();
   }
   if(y !== null && typeof(y) !== 'undefined') {
-    y.remove(); //document.head.removeChild(y);  
+    document.body.removeChild(y); //y.remove();
   }
 }
 
@@ -211,7 +211,7 @@ function newPage() {
         document.getElementsByClassName('backToTop')[0].classList.add('fadeOut');
       },100);
       setTimeout(function() {
-        document.getElementsByClassName('backToTop')[0].remove();
+        document.body.removeChild(document.getElementsByClassName('backToTop')[0]); //document.getElementsByClassName('backToTop')[0].remove();
       },200);
       aStatus = false;
     }
@@ -230,7 +230,7 @@ function backToTop() {
   document.body.scrollTop = document.documentElement.scrollTop = 0;
   let aTop = document.getElementsByClassName('backToTop');
   if(aTop[0] !== undefined) {
-    aTop.remove();
+    document.body.removeChild(aTop); //aTop.remove();
   }
 }
 
