@@ -106,7 +106,7 @@ function removeList() {
     document.body.removeChild(x); //x.remove();
   }
   if(y !== null && typeof(y) !== 'undefined') {
-    document.body.removeChild(y); //y.remove();
+    document.head.removeChild(y); //y.remove();
   }
 }
 
