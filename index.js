@@ -3,29 +3,34 @@
 
 const key = '79fbb0e3b137824088774e8af118892b8cb22e6e';
 
-const submit = document.getElementsByClassName('submit');
-const search = document.getElementsByClassName('search');
+let submit;
+let search;
 const months = ['January','February','March','April','May','June','July','August','September','October', 'November', 'December'];
+
 
 window.onload = runThis;
 
 function runThis() {
-
-  submit[0].addEventListener('click', getData);
-  submit[0].classList.remove('fadeOut');
-  search[0].classList.add('searchExpand');
-  search[0].focus();
+  submit = document.getElementsByClassName('submit')[0];
+  search = document.getElementsByClassName('search')[0];
+  submit.addEventListener('click', getData);
+  submit.classList.remove('fadeOut');
+  search.classList.add('searchExpand');
+  search.focus();
   
   function getData() {
-    let answer = search[0].value;
+    let answer = search.value;
     const jsonpScript = document.createElement('script');
     jsonpScript.id = 'jsonpScriptId';
-    jsonpScript.src = `https://www.giantbomb.com/api/search/?api_key=${key}&format=jsonp&json_callback=storeData&query=${answer}&resources=game&field_list=deck,description,image,name,original_game_rating,original_release_date,platforms`;
+    let jsonSrc = 'https://www.giantbomb.com/api/search/?api_key=' + key;
+    jsonSrc += '&format=jsonp&json_callback=storeData&query=' + answer;
+    jsonSrc += '&resources=game&field_list=deck,description,image,name,original_game_rating,original_release_date,platforms';
+    jsonpScript.src = jsonSrc;
     document.head.appendChild(jsonpScript);
   }
   
   //animations
-  submit[0].addEventListener('click', removePad);
+  submit.addEventListener('click', removePad);
   
   function removePad() {
     document.getElementsByClassName('bb')[0].classList.remove('bbPadded');
@@ -37,10 +42,9 @@ let arrResults = [];
 
 //note: callback should be in global scope
 function storeData(s) {
-  console.log(s);
   if(s.error === 'OK') {
     arrResults = s.results;
-    console.log(arrResults);
+   
     //create divs for list
     if(arrResults.length > 0) {
       createList();
@@ -56,13 +60,12 @@ function noResults() {
     let mainDiv = document.createElement('div');
     mainDiv.classList.add('main', 'fadeOut', 'listPad');
     let newDiv = document.createElement('div');
-    newDiv.innerHTML = `<h2>Your search yielded no results. Please try again.</h2>`;
+    newDiv.innerHTML = '<h2>Your search yielded no results. Please try again.</h2>';
     mainDiv.appendChild(newDiv);
     document.body.appendChild(mainDiv);
     setTimeout(function() {
           document.getElementsByClassName('main')[0].classList.remove('listPad','fadeOut');
     },200);
-
 }
 
 function createList() {
@@ -71,16 +74,16 @@ function createList() {
   mainDiv.classList.add('main');
   for(let i = 0; i < arrResults.length;i++) {
     let newDiv = document.createElement('div');
-    newDiv.innerHTML = `<p><h2 class="titles">${arrResults[i].name}</h2></p><p>${arrResults[i].deck}</p>`;
+    newDiv.innerHTML = '<p><h2 class="titles">' + arrResults[i].name + '</h2></p><p>' + arrResults[i].deck + '</p>';
     newDiv.classList.add('results', 'listPad', 'fadeOut');
-    newDiv.id = `newdiv${i}`;
+    newDiv.id = 'newdiv' + i;
     mainDiv.appendChild(newDiv);
     document.body.appendChild(mainDiv);
-    document.getElementById(`newdiv${i}`).addEventListener('click', newPage);
+    document.getElementById('newdiv' + i).addEventListener('click', newPage);
     let j = 0;
     function myLoop() {
       setTimeout(function() {
-        document.getElementById(`newdiv${i}`).classList.remove('listPad', 'fadeOut');
+        document.getElementById('newdiv' + i).classList.remove('listPad', 'fadeOut');
         j++;
         if(j < arrResults.length) {
           myLoop();
@@ -89,20 +92,18 @@ function createList() {
     }
     myLoop();
   }
-  let btn = document.getElementsByClassName('back-button');
+  let btn = document.getElementsByClassName('back-button')[0];
 
-  if(btn[0] !== undefined) {
-    btn[0].remove();
+  if(btn !== undefined) {
+    btn.remove();
   }
 }
 
 function removeList() {
-  let x = document.getElementsByClassName('main');
-  console.log(x);
-  console.log(x[0]);
+  let x = document.getElementsByClassName('main')[0];
   let y = document.getElementById('jsonpScriptId');
-  if(x[0] !== null && typeof(x[0]) !== 'undefined') {
-    x[0].remove(); //document.body.removeChild(x);
+  if(x !== null && typeof(x) !== 'undefined') {
+    x.remove(); //document.body.removeChild(x);
   }
   if(y !== null && typeof(y) !== 'undefined') {
     y.remove(); //document.head.removeChild(y);  
@@ -130,14 +131,11 @@ function newPage() {
   
   ///modify description
   if(newDesc !== null) {
-    newDesc = newDesc.replace(/\s(href=")[^"]+"/g, '');
-    newDesc = newDesc.replace(/(<a)\s/g, "<span ");
-    newDesc = newDesc.replace(/(<\/a>)/g, "</span>");
-    newDesc = newDesc.replace(/\s(class=")[^"]+"/g, '');
-    newDesc = newDesc.replace(/(width:\s\d+px)/gi, 'width:80% ');
-  
-    
-    
+    newDesc = newDesc.replace(/\s(href=")[^"]+"/g, '')
+                     .replace(/(<a)\s/g, "<span ")
+                     .replace(/(<\/a>)/g, "</span>")
+                     .replace(/\s(class=")[^"]+"/g, '')
+                     .replace(/(width:\s\d+px)/gi, 'width:80% ');
   } else {
     newDesc = "<h2> There is no data for this game </h2>";
   }
@@ -146,7 +144,7 @@ function newPage() {
   //image
   let gameImg;
   if(arrResults[i].image !== null) {
-    gameImg = `<img src=${arrResults[i].image.thumb_url} class='gamePic'>`;
+    gameImg = '<img src=' + arrResults[i].image.thumb_url + ' class="gamePic">';
   } else {
     gameImg = '';
   }
@@ -157,7 +155,7 @@ function newPage() {
   let d = release.getDate();
   let m = months[release.getMonth()];
   let y = release.getFullYear();
-  let gameDate = `${m} ${d}, ${y}`;
+  let gameDate = m + ' ' + d + ', ' + y;
   
   ///Platform
   let platforms = [];
@@ -172,9 +170,9 @@ function newPage() {
 
    
   newDiv.innerHTML = gameImg 
-    + `<div class='gameName'><h1>${arrResults[i].name}</h1></div>`
-    + `<p class='release'><strong>Release Date:</strong><br>${gameDate}</p>`
-    + `<p class='platforms'><strong>Platforms:</strong><br>${gameSystems}</p>`
+    + '<div class="gameName"><h1>' + arrResults[i].name + '</h1></div>'
+    + '<p class="release"><strong>Release Date:</strong><br>' + gameDate + '</p>'
+    + '<p class="platforms"><strong>Platforms:</strong><br>' + gameSystems + '</p>'
     + newDesc;
   document.body.appendChild(mainDiv);
   mainDiv.appendChild(newDiv);
@@ -182,9 +180,10 @@ function newPage() {
   //check to see if there are any <a> anchor tags
   //let tags = document.getElementsByTagName('a');
   //for(let i = 0; i < tags.length;i++) {
+  //console.log(tags);
   //  
   //}
-  //console.log(tags);
+
 
   setTimeout(function() {
     document.getElementsByClassName('main')[0].classList.remove('listPad', 'fadeOut');
@@ -220,8 +219,8 @@ function newPage() {
 }
 
 function rebuildList() {
-  let x = document.getElementsByClassName('main');
-  if(x[0] !== null && typeof(x[0]) !== 'undefined') {
+  let x = document.getElementsByClassName('main')[0];
+  if(x !== null && typeof(x) !== 'undefined') {
     removeList();
     createList();
   }
@@ -236,7 +235,8 @@ function backToTop() {
 }
 
 //need:
-//
+//break down into pages,
+//try to use methods, passing of arguments, DOM manipulation
 //maybe:
 //trailer playing in background
 
