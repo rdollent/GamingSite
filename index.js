@@ -92,15 +92,15 @@ function createList() {
     }
     myLoop();
   }
-  let btn = document.getElementsByClassName('back-button')[0];
+  let btn = document.getElementsByClassName('back-button');
 
-  if(btn !== undefined) {
+  if(btn[0] !== undefined) {
     document.body.removeChild(btn); //btn.remove();
   }
 }
 
 function removeList() {
-  let x = document.getElementsByClassName('main')[0];
+  let x = document.getElementsByClassName('main');
   let y = document.getElementById('jsonpScriptId');
   if(x !== null && typeof(x) !== 'undefined') {
     document.body.removeChild(x); //x.remove();
