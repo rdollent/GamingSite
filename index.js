@@ -212,7 +212,7 @@ function newPage() {
         document.getElementsByClassName('backToTop')[0].classList.add('fadeOut');
       },100);
       setTimeout(function() {
-        document.body.removeChild(document.getElementsByClassName('backToTop')[0]); //document.getElementsByClassName('backToTop')[0].remove();
+        document.body.childNodes[3].removeChild(document.getElementsByClassName('backToTop')[0]); //document.getElementsByClassName('backToTop')[0].remove();
       },200);
       aStatus = false;
     }
