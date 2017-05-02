@@ -126,7 +126,7 @@ img {
   width: 200px;
 }
 
-.submit, .back-button {
+.submit, .back-button, .prev, .next {
   margin: 5px;
   background: white;
   border: 1px solid black;
@@ -136,14 +136,23 @@ img {
   box-shadow: 1px 1px 2px #aaa;
 }
 
-.submit:hover, .back-button:hover, .backToTop:hover {
+.prev, .next {
+  /*display: inline-block;
+  text-align: center;*/
+}
+
+.queryBtns {
+  display: block;
+  text-align: center;
+}
+
+.submit:hover, .back-button:hover, .backToTop:hover,.prev:hover, .next:hover {
   cursor: pointer;
   background:#2098D1;
   color: #fff;
-
 }
 
-.submit:active, .back-button:active {
+.submit:active, .back-button:active,.prev:active, .next:active {
   position: relative;
   left:2px;
   top:2px;
@@ -156,7 +165,7 @@ img {
   transition: opacity 0.1s;
   position: fixed;
   top:0;
-  left:0;
+  right:0;
   padding:5px;
   background: white;
   border: 1px solid black;
@@ -184,7 +193,9 @@ img {
   display:block;
 }
 
-
+.removeDisplay {
+  display:none;
+}
 
 
 /*media queries*/
